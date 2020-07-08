@@ -1,0 +1,38 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s)
+    {
+        this.s = s;
+    }
+
+    public Symbol getS()
+    {
+        return this.s;
+    }
+:};
+
+terminal Int, Char, Float, Double, Cadena, Publico, Private, Sin_Regreso, 
+         Identificador, Numero, ERROR, Parentesis_AP, Parentesis_CR, Llave_AP,
+         Llave_CR, Coma;
+
+non terminal INICIO, VARIABLE, MOD_ALCANCE, TIPO_DATO;
+
+start with INICIO;
+
+    INICIO ::= MOD_ALCANCE Sin_Regreso Identificador Parentesis_AP VARIABLE Parentesis_CR Llave_AP Llave_CR;
+    INICIO ::= MOD_ALCANCE Sin_Regreso Identificador Parentesis_AP Parentesis_CR Llave_AP Llave_CR;
+    INICIO ::= Sin_Regreso Identificador Parentesis_AP Parentesis_CR Llave_AP Llave_CR;
+    INICIO ::= Sin_Regreso Identificador Parentesis_AP VARIABLE Parentesis_CR Llave_AP Llave_CR;
+
+
+    MOD_ALCANCE ::= Publico | Private;
+    VARIABLE ::= TIPO_DATO Identificador;
+    TIPO_DATO ::= Int|Char|Float|Double|Cadena;
+
+
